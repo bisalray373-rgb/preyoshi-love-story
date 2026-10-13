@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff1f5">
+  <title>প্রেয়সী — আমাদের ছোট্ট গল্প</title>
+  <style>
+    :root {
+      --pink: #d94f79;
+      --deep: #6e3047;
+      --paper: rgba(255,255,255,.86);
+      --soft: #fff1f5;
+      --gold: #c28a58;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--deep);
+      font-family: system-ui, -apple-system, "Noto Sans Bengali", "Hind Siliguri", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255,203,219,.8), transparent 30%),
+        radial-gradient(circle at 90% 35%, rgba(255,225,195,.6), transparent 28%),
+        linear-gradient(160deg, #fff8fa, #fff0f4 50%, #fff9f0);
+      min-height: 100vh; overflow-x: hidden;
+    }
+    .sparkle { position: fixed; z-index: 0; pointer-events: none; opacity: .45; animation: float 9s ease-in-out infinite; }
+    .sparkle:nth-child(1) { top: 12%; left: 6%; }
+    .sparkle:nth-child(2) { top: 30%; right: 8%; animation-delay: -3s; }
+    .sparkle:nth-child(3) { top: 72%; left: 10%; animation-delay: -5s; }
+    @keyframes float { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-18px) rotate(12deg); } }
+    .wrap { position: relative; z-index: 1; width: min(760px, 100%); margin: auto; padding: 18px 16px 48px; }
+    .topline { text-align: center; font-size: .82rem; letter-spacing: .08em; color: #a45a72; margin: 8px 0 22px; }
+    .hero {
+      min-height: 76vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 34px 20px; border: 1px solid rgba(217,79,121,.16);
+      border-radius: 30px; background: rgba(255,255,255,.54); box-shadow: 0 18px 60px rgba(133,58,83,.08);
+      backdrop-filter: blur(8px);
+    }
+    .moon { font-size: 3.3rem; filter: drop-shadow(0 5px 12px rgba(217,79,121,.2)); }
+    h1 { font-size: clamp(2rem, 8vw, 3.5rem); line-height: 1.25; margin: 14px 0 12px; color: var(--pink); }
+    .subtitle { max-width: 470px; line-height: 1.9; font-size: 1rem; color: #805166; }
+    .small-note { font-size: .82rem; color: #a27888; margin: 14px 0 0; }
+    button, .button {
+      border: 0; cursor: pointer; font: inherit; text-decoration: none;
+      border-radius: 999px; padding: 13px 20px; min-height: 46px;
+      background: var(--pink); color: white; box-shadow: 0 8px 22px rgba(217,79,121,.22);
+      transition: transform .2s, box-shadow .2s;
+    }
+    button:hover, .button:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(217,79,121,.28); }
+    button:focus-visible, a:focus-visible { outline: 3px solid #7d4058; outline-offset: 3px; }
+    .secondary { background: #fff; color: var(--pink); border: 1px solid #f0bfd0; box-shadow: none; }
+    .section { margin-top: 22px; padding: 26px 20px; border: 1px solid rgba(217,79,121,.13); border-radius: 25px; background: var(--paper); box-shadow: 0 12px 34px rgba(133,58,83,.06); }
+    .section h2 { text-align: center; color: var(--pink); font-size: 1.5rem; margin: 0 0 12px; }
+    .section-intro { text-align: center; color: #93677a; line-height: 1.8; margin: 0 auto 20px; max-width: 520px; }
+    .story-card { background: #fff8fa; border: 1px solid #f6d6e0; border-radius: 20px; padding: 22px 18px; text-align: center; min-height: 210px; display: flex; flex-direction: column; justify-content: center; }
+    .chapter { color: #b57a8d; font-size: .82rem; letter-spacing: .04em; }
+    .story-card h3 { color: var(--deep); margin: 9px 0; font-size: 1.25rem; }
+    .story-card p { line-height: 1.95; margin: 0; white-space: pre-line; }
+    .story-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 16px; }
+    .progress { height: 5px; background: #f6dce5; border-radius: 20px; overflow: hidden; margin: 18px 0 0; }
+    .progress > div { height: 100%; width: 0; background: linear-gradient(90deg, #d94f79, #edb2c3); transition: width .35s; }
+    .letter { background: #fffaf1; border: 1px solid #f0dfc4; border-radius: 8px 22px 22px 22px; padding: 24px 20px; line-height: 2; white-space: pre-line; }
+    .letter-sign { text-align: right; color: #b15a77; margin-top: 14px; }
+    .gallery { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+    .photo { background: #fff8fa; padding: 9px; border-radius: 15px; border: 1px solid #f4d8e1; }
+    .photo img { display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 10px; background: #f7e8ed; }
+    .photo p { margin: 9px 3px 4px; font-size: .9rem; line-height: 1.7; text-align: center; }
+    .placeholder { display: grid; place-items: center; text-align: center; aspect-ratio: 4/5; padding: 12px; border-radius: 10px; background: linear-gradient(145deg,#ffe4ec,#fff3dd); color: #a85e78; line-height: 1.8; }
+    .question-box { text-align: center; background: #fff7fa; padding: 20px 14px; border-radius: 18px; }
+    .question-box p { line-height: 1.9; }
+    .response { min-height: 28px; color: #a04c6b; margin-top: 14px; }
+    footer { text-align: center; padding: 28px 12px 8px; color: #a17b8a; font-size: .85rem; line-height: 1.8; }
+    .hidden { display: none !important; }
+    .fade-in { animation: appear .55s ease both; }
+    @keyframes appear { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @media (min-width: 620px) { .gallery { grid-template-columns: repeat(3, minmax(0,1fr)); } .section { padding: 30px; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="sparkle">✧</div><div class="sparkle">♡</div><div class="sparkle">✦</div>
+  <main class="wrap">
+    <div class="topline">একটি ছোট্ট গল্প • শুধু তোমার জন্য</div>
+    <section class="hero" id="home">
+      <div class="moon">🌙</div>
+      <h1>প্রেয়সী,<br>আমাদের ছোট্ট গল্প</h1>
+      <p class="subtitle">কিছু অনুভূতি খুব সহজে বলা যায় না। তাই তোমার জন্য কয়েকটি ছোট্ট পৃষ্ঠা সাজালাম—তুমি নিজের ইচ্ছেমতো দেখবে, থামবে, কিংবা পরে ফিরে আসবে।</p>
+      <button id="startBtn">গল্পটা শুরু করি ♡</button>
+      <p class="small-note">কোনো তাড়া নেই। এই ছোট্ট জায়গাটা তোমার জন্য।</p>
+    </section>
+
+    <section class="section hidden" id="story">
+      <h2>আমাদের গল্পের কয়েকটি পৃষ্ঠা</h2>
+      <p class="section-intro">প্রতিটি পৃষ্ঠায় একটি অনুভূতি। যে গতিতে ভালো লাগে, সেভাবেই এগোও।</p>
+      <div class="story-card fade-in" id="storyCard" aria-live="polite">
+        <div class="chapter" id="chapter">পৃষ্ঠা ১ / ৫</div>
+        <h3 id="storyTitle">কিছু মানুষ আলাদা</h3>
+        <p id="storyText"></p>
+      </div>
+      <div class="progress" aria-label="গল্পের অগ্রগতি"><div id="progressBar"></div></div>
+      <div class="story-actions">
+        <button class="secondary" id="prevBtn">← আগের পৃষ্ঠা</button>
+        <button id="nextBtn">পরের পৃষ্ঠা →</button>
+      </div>
+    </section>
+
+    <section class="section hidden" id="letterSection">
+      <h2>তোমার জন্য একটি চিঠি 💌</h2>
+      <p class="section-intro">চিঠিটা পড়ার জন্য সময় দেওয়ায় ধন্যবাদ।</p>
+      <div class="letter" id="letterText">প্রেয়সী,
+
+তোমাকে নিয়ে আমার অনুভূতিগুলো সবসময় নিখুঁত শব্দে বলা হয়তো সম্ভব নয়। তবু আমি চাই, তুমি জানো—তোমার হাসি, তোমার কথা, আর তোমার নিজের মতো করে থাকা আমার কাছে মূল্যবান।
+
+যদি কখনো তোমার মন খারাপ থাকে, কথা বলতে ইচ্ছে না করে, কিংবা নিজের জন্য একটু সময় দরকার হয়—সেটাও ঠিক আছে। তোমাকে সবসময় হাসিখুশি থাকতে হবে না, আর আমাকে সঙ্গে সঙ্গে উত্তর দিতেও হবে না।
+
+আমি চাই আমাদের মাঝে এমন একটা জায়গা থাকুক, যেখানে দুজনেই নিশ্চিন্তে নিজের কথা বলতে পারি, একে অপরকে শুনতে পারি, আর ভুল হলে বুঝে নিতে পারি।
+
+এই ছোট্ট ওয়েবসাইটটা তোমার জন্য আমার একটি আন্তরিক চেষ্টা। কোনো প্রত্যাশার বোঝা নয়—শুধু একটু মায়া আর যত্ন। ❤️</div>
+      <div class="letter-sign">অনেক মায়া রইল,<br>তোমার মানুষ</div>
+      <div class="story-actions"><button class="secondary" id="showGalleryBtn">আমাদের স্মৃতিগুলো দেখো 📷</button></div>
+    </section>
+
+    <section class="section hidden" id="gallerySection">
+      <h2>ছোট ছোট স্মৃতি 📸</h2>
+      <p class="section-intro">এখানে তোমাদের নিজের ছবি বসালে জায়গাটা আরও ব্যক্তিগত হবে। নমুনা ছবির জায়গায় images ফোল্ডারে রাখা ছবির নাম ব্যবহার করো।</p>
+      <div class="gallery" id="gallery">
+        <div class="photo"><div class="placeholder">📷<br>ছবি ১ যোগ করো<br><small>images/photo1.jpg</small></div><p>এই মুহূর্তটার কথা মনে আছে?</p></div>
+        <div class="photo"><div class="placeholder">🌷<br>ছবি ২ যোগ করো<br><small>images/photo2.jpg</small></div><p>একটা ছোট্ট স্মৃতি, অনেকটা মায়া।</p></div>
+        <div class="photo"><div class="placeholder">✨<br>ছবি ৩ যোগ করো<br><small>images/photo3.jpg</small></div><p>কিছু মুহূর্ত ছবির চেয়েও বেশি কিছু।</p></div>
+      </div>
+      <div class="story-actions"><button id="finalBtn">শেষের ছোট্ট কথাটা 🌸</button></div>
+    </section>
+
+    <section class="section hidden" id="endingSection">
+      <h2>শেষ নয়, শুধু একটি নরম কথা 🌸</h2>
+      <div class="question-box">
+        <p>প্রেয়সী, তোমার অনুভূতি আমার কাছে গুরুত্বপূর্ণ। তুমি চাইলে কখনো তোমার মনের কথা বলতে পারো—আমি মন দিয়ে শুনতে চেষ্টা করব। আর যদি এখন কথা বলতে ইচ্ছে না করে, সেটাও একদম ঠিক আছে।</p>
+        <p><strong>আজ তোমার কী ভালো লাগবে?</strong></p>
+        <div class="story-actions">
+          <button class="secondary" data-answer="কথা বলতে ইচ্ছে করলে, আমি মন দিয়ে শুনব।">একটু কথা বলি</button>
+          <button class="secondary" data-answer="তোমার নিজের সময় নাও। যখন ভালো লাগবে, তখন কথা হবে।">আজ একটু নিজের সময়</button>
+          <button class="secondary" data-answer="চুপচাপ এই ছোট্ট গল্পটা উপভোগ করো। কোনো উত্তর দেওয়ার দরকার নেই।">শুধু গল্পটা দেখি</button>
+        </div>
+        <div class="response" id="response" aria-live="polite"></div>
+      </div>
+    </section>
+    <footer>ভালোবাসা মানে শুধু কাছে থাকা নয়—একে অপরের অনুভূতিকে সম্মান করাও।<br>তোমার জন্য যত্ন করে সাজানো একটি ছোট্ট অনলাইন উপহার ♡</footer>
+  </main>
+  <script>
+    const chapters = [
+      { title: "কিছু মানুষ আলাদা", text: "কিছু মানুষ জীবনে এসে খুব সাধারণ দিনগুলোকেও একটু বিশেষ করে দেয়। তোমার কথা মনে হলে আমার কাছে এমন অনেক ছোট্ট মুহূর্তের কথা মনে পড়ে।" },
+      { title: "ছোট্ট মুহূর্তের মায়া", text: "সব স্মৃতি বড় কোনো ঘটনা দিয়ে তৈরি হয় না। কখনো একটা কথা, একটা হাসি, কিংবা একসঙ্গে কাটানো কয়েকটা মিনিটও মনে থেকে যায় অনেক দিন।" },
+      { title: "তুমি যেমন, তেমনই সুন্দর", text: "তোমাকে সবসময় হাসিখুশি বা নিখুঁত হতে হবে না। তোমার নিজের মতো থাকা, নিজের স্বপ্ন আর অনুভূতিগুলো—এসবেরও আলাদা মূল্য আছে।" },
+      { title: "শোনা, বোঝা, পাশে থাকা", text: "কখনো যদি আমার কোনো কথায় কষ্ট পেয়ে থাকো, আমি সেটা বুঝতে ও শুনতে চাই। সবকিছুর উত্তর সঙ্গে সঙ্গে দরকার নেই; ধীরে ধীরে, সম্মান রেখে কথা বলা যায়।" },
+      { title: "তোমার ইচ্ছেটাই আগে", text: "এই গল্পের শেষ পৃষ্ঠায় পৌঁছানোই আসল কথা নয়। তুমি যতটুকু দেখতে চাও, ততটুকুই যথেষ্ট। এই ছোট্ট উপহারটা তোমার মুখে একটুখানি হাসি আনতে পারলে আমার ভালো লাগবে।" }
+    ];
+    let current = 0;
+    const $ = id => document.getElementById(id);
+    function renderChapter() {
+      $("chapter").textContent = `পৃষ্ঠা ${current + 1} / ${chapters.length}`;
+      $("storyTitle").textContent = chapters[current].title;
+      $("storyText").textContent = chapters[current].text;
+      $("progressBar").style.width = `${((current + 1) / chapters.length) * 100}%`;
+      $("prevBtn").disabled = current === 0;
+      $("prevBtn").style.opacity = current === 0 ? ".45" : "1";
+      $("nextBtn").textContent = current === chapters.length - 1 ? "চিঠিটা পড়ি 💌" : "পরের পৃষ্ঠা →";
+      $("storyCard").classList.remove("fade-in"); void $("storyCard").offsetWidth; $("storyCard").classList.add("fade-in");
+    }
+    function show(id) { $(id).classList.remove("hidden"); $(id).scrollIntoView({behavior:"smooth", block:"start"}); }
+    $("startBtn").addEventListener("click", () => { show("story"); renderChapter(); });
+    $("prevBtn").addEventListener("click", () => { if (current > 0) { current--; renderChapter(); } });
+    $("nextBtn").addEventListener("click", () => {
+      if (current < chapters.length - 1) { current++; renderChapter(); }
+      else { show("letterSection"); }
+    });
+    $("showGalleryBtn").addEventListener("click", () => show("gallerySection"));
+    $("finalBtn").addEventListener("click", () => show("endingSection"));
+    document.querySelectorAll("[data-answer]").forEach(button => {
+      button.addEventListener("click", () => { $("response").textContent = button.dataset.answer; });
+    });
+
+    // নিজের ছবি যোগ করতে নিচের photoList-এ ফাইলের নাম ও ক্যাপশন লিখুন।
+    // ছবিগুলো images ফোল্ডারে রাখুন; উদাহরণ: images/photo1.jpg
+    const photoList = [
+      // { src: "images/photo1.jpg", caption: "এই মুহূর্তটার কথা মনে আছে?" },
+      // { src: "images/photo2.jpg", caption: "একটা ছোট্ট স্মৃতি, অনেকটা মায়া।" },
+      // { src: "images/photo3.jpg", caption: "কিছু মুহূর্ত ছবির চেয়েও বেশি কিছু।" }
+    ];
+    if (photoList.length) {
+      $("gallery").innerHTML = "";
+      photoList.forEach(item => {
+        const card = document.createElement("div"); card.className = "photo";
+        const img = document.createElement("img"); img.src = item.src; img.alt = item.caption || "আমাদের স্মৃতি"; img.loading = "lazy";
+        img.onerror = () => { img.replaceWith(Object.assign(document.createElement("div"), {className:"placeholder", textContent:"ছবিটি পাওয়া যায়নি: " + item.src})); };
+        const cap = document.createElement("p"); cap.textContent = item.caption || "একটি সুন্দর স্মৃতি";
+        card.append(img, cap); $("gallery").append(card);
+      });
+    }
+  </script>
+</body>
+</html>
